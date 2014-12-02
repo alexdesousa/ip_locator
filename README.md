@@ -91,8 +91,4 @@ The following is the CSV format accepted by the application:
 "84559520","84559527","ES","SPAIN"
 (...)
 ```
-Each line is a record and the values go in the following order:
-1. Start IP.
-2. End IP.
-3. Contry code.
-4. Country name.
+Each line is a record and the values go in the following order: start IP, end IP, country code, country name.
