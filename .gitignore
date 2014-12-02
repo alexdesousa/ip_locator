@@ -1,0 +1,7 @@
+*.lock
+*.json
+*.csv
+*.xml
+vendor
+*.sqlite
+*~
