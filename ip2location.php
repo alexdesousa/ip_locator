@@ -102,18 +102,28 @@ $longopts  = array(
 );
 $options = getopt($shortopts, $longopts);
 
-$IpExporter = new GL\Ip2LocationExporter($entityManager);
-$IpLocator  = new GL\IpLocator($entityManager);
+try {
+    $IpExporter = new GL\Ip2LocationExporter($entityManager);
+    $IpLocator  = new GL\IpLocator($entityManager);
 
-if(isset($options[EXPORT])) {
-    export($options, $IpExporter);
-} else if(isset($options[FIND])) {
-    find($options, $IpLocator);
-} else if(isset($options[SAVE])) {
-    save($options, $IpExporter);
-} else if (isset($options[HELP]) || isset($options[LONG_HELP])) {
-    usage(0);
-} else {
-    usage(1);
+    if(isset($options[EXPORT])) {
+        export($options, $IpExporter);
+    } else if(isset($options[FIND])) {
+        find($options, $IpLocator);
+    } else if(isset($options[SAVE])) {
+        save($options, $IpExporter);
+    } else if (isset($options[HELP]) || isset($options[LONG_HELP])) {
+        usage(0);
+    } else {
+        usage(1);
+    }
+    exit(0);
+} catch(GL\BadIpAddressException $e) {
+    print "Bad IP address.\n";
+} catch(GL\NotSupportedFormatException $e) {
+    print "Not supported file format.\n";
+} catch(GL\IOException $e) {
+    print "Error reaading or writing file.\n";
 }
+exit(1);
 ?>
