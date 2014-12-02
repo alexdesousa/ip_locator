@@ -69,7 +69,7 @@ function find($options, $IpLocator) {
     if($result == NULL)
         print "IP not found in the database.";
     else
-        print $result->toString();
+        print $result->toString() . "\n";
 }
 
 function find_usage() {
