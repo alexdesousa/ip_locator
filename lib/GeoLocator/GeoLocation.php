@@ -35,6 +35,25 @@ class BadCountryCodeException extends \Exception {}
 class BadCountryNameException extends \Exception {}
 
 /**
+ * Checks and converts IP to long format.
+ *
+ * @param $ip IP address.
+ *
+ * @return Valid long IP address.
+ */
+function ipToLong($ip) {
+    if(is_numeric($ip)) {
+        if(filter_var(long2ip($ip), FILTER_VALIDATE_IP))
+            return intval($ip);
+    } else {
+        if(filter_var($ip, FILTER_VALIDATE_IP))
+            return ip2long($ip);
+    }
+
+    throw new BadIpAddressException();
+}
+
+/**
  * @brief GeoLocation entity object.
  *
  * @Entity @Table(name="geolocations")
@@ -65,25 +84,6 @@ class GeoLocation {
     protected $countryName;
 
     /**
-     * Checks and converts IP to long format.
-     *
-     * @param $ip IP address.
-     *
-     * @return Valid long IP address.
-     */
-    private function ipToLong($ip) {
-        if(is_numeric($ip)) {
-            if(filter_var(long2ip($ip), FILTER_VALIDATE_IP))
-                return intval($ip);
-        } else {
-            if(filter_var($ip, FILTER_VALIDATE_IP))
-                return ip2long($ip);
-        }
-
-        throw new BadIpAddressException();
-    }
-
-    /**
      * @param string $startIp     Start IP address.
      * @param string $endIP       End IP address.
      * @param string $countryCode Country code.
@@ -112,7 +112,7 @@ class GeoLocation {
      * @param string $startIp Start IP address.
      */
     public function setStartIp($startIp) {
-        $this->startIp = $this->ipToLong($startIp);
+        $this->startIp = ipToLong($startIp);
     }
 
     /**
@@ -128,7 +128,7 @@ class GeoLocation {
      * @param string $endIp End IP address.
      */
     public function setEndIp($endIp) {
-        $this->endIp = $this->ipToLong($endIp);
+        $this->endIp = ipToLong($endIp);
     }
 
     /**
@@ -188,6 +188,17 @@ class GeoLocation {
 
         return $ip_location;
     }
+    
+    /**
+     * @return string String representation.
+     */
+     public function toString() {
+        $result = "Start IP address: " . long2ip($this->getStartIp());
+        $result .= "\nEnd IP address: " . long2ip($this->getEndIp());
+        $result .= "\nCountry code: " . $this->getCountryCode();
+        $result .= "\nCountry name: " . $this->getCountryName();
+        return $result;
+     }
 }
 
 /**

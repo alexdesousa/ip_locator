@@ -65,6 +65,29 @@ class Ip2LocationExporter {
         $this->from($inputFormat, $inputFile);
         $this->to("db", "");
     }
+    
+    /**
+     * Searches an IP address in a GeoLocations array.
+     *
+     * @param int    $ip       IP address.
+     * @param string $type     Input file format.
+     * @param string $filename Input file.
+     *
+     * @return GeoLocation object or NULL.
+     */     
+    public function find($ip, $type, $filename) {
+        $ip = ipToLong($ip);
+        $this->from($type, $filename);
+        
+        foreach($this->geoLocations as $elem) {
+            $s = intval($elem->getStartIp());
+            $e = intval($elem->getEndIp());
+            if($s <= $ip && $ip <= $e)
+                return $elem;
+        }
+
+        return NULL;
+    }
 
     /**
      * Converts the implemented formats to GeoLocations array.
