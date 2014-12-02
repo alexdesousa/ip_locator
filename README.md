@@ -1,6 +1,9 @@
 # Ip Locator
 
-This project is just a test for file format transformations in PHP. The project uses composer to retrieve all its the dependencies and Doctrine as ORM for the database.
+This project is just a test for file transformations in PHP. The project uses composer to retrieve all its the dependencies and Doctrine as ORM for the database. The application allows:
+- Saves information from a file to the database.
+- IP location searches on the database or the supplied files.
+- Export supported formats to other supported formats (XML, JSON and CSV).
 
 # Installation
 
@@ -86,4 +89,10 @@ The following is the CSV format accepted by the application:
 "69956112","71020671","US","UNITED STATES"
 "84558584","84558847","NL","NETHERLANDS"
 "84559520","84559527","ES","SPAIN"
+(...)
 ```
+Each line is a record and the values go in the following order:
+1. Start IP.
+2. End IP.
+3. Contry code.
+4. Country name.
