@@ -3,7 +3,8 @@
 #Download dependencies.
 composer install;
 #Create schema.
-vendor/bin/doctrine orm:schema-tool:create --dump-sql;
+./vendor/bin/doctrine orm:schema-tool:create --dump-sql;
+./vendor/bin/doctrine orm:schema-tool:update --force --dump-sql;
 #Save sample in schema.
 ./ip2location.php --save -i ipcountry.sample.csv -x csv;
 #Export sample to JSON format
